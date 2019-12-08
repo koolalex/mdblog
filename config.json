@@ -1,0 +1,18 @@
+{
+  "port": 8086,
+  "pageSize": 4,
+  "descriptionLen": 200,
+  "author": "alex wang",
+  "icp": "",
+  "webHookSecret": "koolalex<>123",
+  "utterancesRepo": "xusenlin/blog_docs",
+  "timeLayout": "2006.01.02 15:04",
+  "siteName": "alex's Blog",
+  "documentPath": "resources/blog_docs",
+  "htmlKeywords": "forest blog,Golang,前端",
+  "htmlDescription": "Xu Senlin's Personal blog",
+  "categoryListFileNumber": 6,
+  "themeColor": "#f44336",
+  "dashboardEntrance": "/admin",
+  "themeOption": ["#673ab7","#f44336","#9c27b0","#2196f3","#607d8b","#795548"]
+}
