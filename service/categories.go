@@ -1,8 +1,8 @@
 package service
 
 import (
-	"ForestBlog/config"
-	"ForestBlog/models"
+	"github.com/koolalex/mdblog/config"
+	"github.com/koolalex/mdblog/models"
 	"io/ioutil"
 )
 

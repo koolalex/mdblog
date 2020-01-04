@@ -1,7 +1,7 @@
 package models
 
 import (
-	"ForestBlog/config"
+	"github.com/koolalex/mdblog/config"
 	"time"
 )
 

@@ -1,11 +1,11 @@
 package controller
 
 import (
-	"ForestBlog/config"
-	"ForestBlog/helper"
 	"crypto/hmac"
 	"crypto/sha1"
 	"encoding/hex"
+	"github.com/koolalex/mdblog/config"
+	"github.com/koolalex/mdblog/helper"
 	"io/ioutil"
 	"log"
 	"net/http"

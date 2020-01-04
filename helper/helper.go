@@ -1,9 +1,9 @@
 package helper
 
 import (
-	"ForestBlog/config"
-	"ForestBlog/models"
 	"fmt"
+	"github.com/koolalex/mdblog/config"
+	"github.com/koolalex/mdblog/models"
 	"html/template"
 	"log"
 	"net/http"

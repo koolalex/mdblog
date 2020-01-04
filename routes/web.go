@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"ForestBlog/config"
-	"ForestBlog/controller"
+	"github.com/koolalex/mdblog/config"
+	"github.com/koolalex/mdblog/controller"
 	"net/http"
 )
 

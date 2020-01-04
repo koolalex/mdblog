@@ -1,9 +1,9 @@
 package service
 
 import (
-	"ForestBlog/config"
-	"ForestBlog/helper"
-	"ForestBlog/models"
+	"github.com/koolalex/mdblog/config"
+	"github.com/koolalex/mdblog/helper"
+	"github.com/koolalex/mdblog/models"
 	"math"
 	"strings"
 )

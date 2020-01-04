@@ -1,12 +1,12 @@
 package models
 
 import (
-	"ForestBlog/config"
 	"bytes"
 	"crypto/md5"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/koolalex/mdblog/config"
 	"io/ioutil"
 	"os"
 	"sort"

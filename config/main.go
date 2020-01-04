@@ -12,7 +12,6 @@ type Config struct {
 	systemConfig
 }
 
-
 var Cfg Config
 var CurrentDir string
 
@@ -36,13 +35,13 @@ func init() {
 	if jsonErr != nil {
 		panic(err)
 	}
-	if "" == Cfg.DashboardEntrance || ! strings.HasPrefix(Cfg.DashboardEntrance, "/") {
+	if "" == Cfg.DashboardEntrance || !strings.HasPrefix(Cfg.DashboardEntrance, "/") {
 		Cfg.DashboardEntrance = "/admin"
 	}
 
-	Cfg.AppName = "ForestBlog"
+	Cfg.AppName = "Golang"
 	Cfg.Version = 2.2
 	Cfg.GitHookUrl = "/api/git_push_hook"
-	Cfg.AppRepository = "https://github.com/xusenlin/ForestBlog"
+	Cfg.AppRepository = ""
 
 }

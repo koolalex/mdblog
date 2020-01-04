@@ -2,7 +2,7 @@
   "port": 8086,
   "pageSize": 4,
   "descriptionLen": 200,
-  "author": "alex wang",
+  "author": "Alex",
   "icp": "",
   "webHookSecret": "koolalex<>123",
   "utterancesRepo": "xusenlin/blog_docs",

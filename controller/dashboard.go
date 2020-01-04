@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"ForestBlog/config"
-	"ForestBlog/helper"
-	"ForestBlog/service"
+	"github.com/koolalex/mdblog/config"
+	"github.com/koolalex/mdblog/helper"
+	"github.com/koolalex/mdblog/service"
 	"net/http"
 	"strconv"
 )

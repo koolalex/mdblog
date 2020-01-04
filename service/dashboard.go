@@ -1,6 +1,6 @@
 package service
 
-import "ForestBlog/config"
+import "github.com/koolalex/mdblog/config"
 
 func SetThemeColor(index int) {
 

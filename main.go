@@ -1,9 +1,9 @@
 package main
 
 import (
-	"ForestBlog/config"
-	"ForestBlog/routes"
 	"fmt"
+	"github.com/koolalex/mdblog/config"
+	"github.com/koolalex/mdblog/routes"
 	"net/http"
 	"strconv"
 )
