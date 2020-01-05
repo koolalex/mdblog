@@ -47,7 +47,7 @@ func GithubHook(w http.ResponseWriter, r *http.Request) {
 
 	if sign != expectedHash {
 		helper.SedResponse(w, "WebHook err:Signature does not match")
-		log.Println("WebHook err:Signature does not match")
+		log.Printf("WebHook err:Signature does not match, input_signature:%v calc_signature:%v", sign, expectedHash)
 		return
 	}
 
