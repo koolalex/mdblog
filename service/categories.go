@@ -6,42 +6,77 @@ import (
 	"io/ioutil"
 )
 
+//GetCategories 获取目录
 func GetCategories() (models.Categories, error) {
-
-	var content models.Categories
-
+	var categories models.Categories
 	categoriesDir, err := ioutil.ReadDir(config.Cfg.DocumentPath + "/content")
-
 	if err != nil {
-		return content, err
+		return categories, err
 	}
 
+	categoryMap := make(map[string]*models.Category)
 	for _, category := range categoriesDir {
-
 		if !category.IsDir() {
 			continue
 		}
-		var categoryContent models.Category
-		markdownList, err := models.GetMarkdownListByCache("/" + category.Name())
 
-		if err != nil {
-			return content, err
+		if markdownList, err := models.GetMarkdownListByCache("/" + category.Name()); err == nil {
+			for _, md := range markdownList {
+				category, exists := categoryMap[md.Category]
+				if !exists {
+					category = &models.Category{}
+					categoryMap[md.Category] = category
+				}
+				category.Name = md.Meta.Category
+				category.MarkdownFileList = append(category.MarkdownFileList, md)
+			}
+		} else {
+			return categories, err
 		}
+	}
 
+	for _, category := range categoryMap {
+		markdownList := category.MarkdownFileList
 		listLen := len(markdownList)
 		categoryListFileNumber := listLen
-
 		if listLen >= config.Cfg.CategoryListFileNumber {
 			categoryListFileNumber = config.Cfg.CategoryListFileNumber
 		}
 
-		categoryContent.Name = category.Name()
-		categoryContent.Path = "/" + category.Name()
-		categoryContent.Number = listLen
-		categoryContent.MarkdownFileList = markdownList[0:categoryListFileNumber]
-
-		content = append(content, categoryContent)
+		category.Number = listLen
+		category.MarkdownFileList = markdownList[0:categoryListFileNumber]
+		categories = append(categories, *category)
 	}
 
-	return content, nil
+	return categories, nil
+}
+
+func GetCategory(categoryName string) (models.Category, error) {
+	category := models.Category{
+		Name: categoryName,
+	}
+
+	categoriesDir, err := ioutil.ReadDir(config.Cfg.DocumentPath + "/content")
+	if err != nil {
+		return category, err
+	}
+
+	for _, fi := range categoriesDir {
+		if !fi.IsDir() {
+			continue
+		}
+
+		if markdownList, err := models.GetMarkdownListByCache("/" + fi.Name()); err == nil {
+			for _, md := range markdownList {
+				if md.Meta.Category == categoryName {
+					category.Number += 1
+					category.MarkdownFileList = append(category.MarkdownFileList, md)
+				}
+			}
+		} else {
+			return category, err
+		}
+	}
+
+	return category, nil
 }

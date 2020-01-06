@@ -10,13 +10,20 @@ type Tag string
 type Time time.Time
 
 type Markdown struct {
+	//Title       string `json:"title"`
+	//Category    string `json:"category"`
+	//Tags        []Tag  `json:"tags"`
+	Meta
+	Date Time   `json:"date"` //
+	Path string `json:"path"`
+}
+
+type Meta struct {
 	Title       string `json:"title"`
-	Date        Time   `json:"date"`
-	Description string `json:"description"`
+	Category    string `json:"category"`
 	Tags        []Tag  `json:"tags"`
 	Author      string `json:"author"`
-	Category    string `json:"category"`
-	Path        string `json:"path"`
+	Description string `json:"description"`
 }
 
 type MarkdownDetails struct {

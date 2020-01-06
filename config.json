@@ -12,7 +12,7 @@
   "htmlKeywords": "go,golang,前端,web",
   "htmlDescription": "Personal blog",
   "categoryListFileNumber": 6,
-  "themeColor": "#f44336",
+  "themeColor": "#090909",
   "dashboardEntrance": "/admin",
   "themeOption": ["#673ab7","#f44336","#9c27b0","#2196f3","#607d8b","#795548"]
 }

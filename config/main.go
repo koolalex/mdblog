@@ -39,7 +39,7 @@ func init() {
 		Cfg.DashboardEntrance = "/admin"
 	}
 
-	Cfg.AppName = "Golang"
+	Cfg.AppName = "Go"
 	Cfg.Version = 2.2
 	Cfg.GitHookUrl = "/api/git_push_hook"
 	Cfg.AppRepository = ""

@@ -45,7 +45,6 @@ func Article(w http.ResponseWriter, r *http.Request) {
 }
 
 func CategoryArticle(w http.ResponseWriter, r *http.Request) {
-
 	err := r.ParseForm()
 	if err != nil {
 		helper.WriteErrorHtml(w, err.Error())
@@ -53,7 +52,6 @@ func CategoryArticle(w http.ResponseWriter, r *http.Request) {
 	}
 
 	template, err := helper.HtmlTemplate("category")
-
 	if err != nil {
 		helper.WriteErrorHtml(w, err.Error())
 		return
@@ -64,7 +62,7 @@ func CategoryArticle(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		page = 1
 	}
-	content, err := service.GetArticleList(page, categoryName, "")
+	content, err := service.GetCategoryArticlePagination(page, categoryName, "")
 	if err != nil {
 		helper.WriteErrorHtml(w, err.Error())
 		return

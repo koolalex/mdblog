@@ -50,9 +50,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func Categories(w http.ResponseWriter, r *http.Request) {
-
 	template, err := helper.HtmlTemplate("categories")
-
 	if err != nil {
 		helper.WriteErrorHtml(w, err.Error())
 		return

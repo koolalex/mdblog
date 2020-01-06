@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/koolalex/mdblog/config"
+	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"os"
 	"sort"
@@ -14,21 +15,16 @@ import (
 )
 
 func readMarkdown(path string) (Markdown, MarkdownDetails, error) {
-	//path=>/categoryName/xxx.md
-	fullPath := config.Cfg.DocumentPath + "/content" + path
-
-	categoryName := strings.Replace(path, "/", "", 1)
-
-	if strings.Index(categoryName, "/") == -1 { //文件在根目录下(content/)没有分类名称
-		categoryName = ""
-	} else {
-		categoryName = strings.Split(categoryName, "/")[0]
-	}
-
 	var (
 		content     Markdown
 		fullContent MarkdownDetails
 	)
+
+	fullPath := config.Cfg.DocumentPath + "/content" + path
+	meta, err := readMeta(path)
+	if err != nil {
+		return content, fullContent, err
+	}
 
 	markdownFile, fileErr := os.Stat(fullPath)
 
@@ -46,8 +42,8 @@ func readMarkdown(path string) (Markdown, MarkdownDetails, error) {
 	markdown = bytes.TrimSpace(markdown)
 
 	content.Path = path
-	content.Category = categoryName
-	content.Title = markdownFile.Name()
+	content.Category = meta.Category
+	content.Title = meta.Title
 	content.Date = Time(markdownFile.ModTime())
 
 	fullContent.Markdown = content
@@ -74,6 +70,22 @@ func readMarkdown(path string) (Markdown, MarkdownDetails, error) {
 	return content, fullContent, nil
 }
 
+func readMeta(path string) (meta Meta, err error) {
+	categoryName := strings.Replace(path, "/", "", 1)
+	if strings.Index(categoryName, "/") >= 0 { //文件在根目录下(content/)没有分类名称
+		categoryName = strings.Split(categoryName, "/")[0]
+		metaFullPath := config.Cfg.DocumentPath + "/content/" + categoryName + "/meta.yml"
+		data, err := ioutil.ReadFile(metaFullPath)
+		if err != nil {
+			return Meta{}, err
+		}
+		if err = yaml.Unmarshal([]byte(data), &meta); err == nil {
+			return meta, nil
+		}
+	}
+	return Meta{}, errors.New(fmt.Sprintf("path invalid:%v", path))
+}
+
 func cropDesc(c []byte) string {
 	content := []rune(string(c))
 	contentLen := len(content)
@@ -85,20 +97,17 @@ func cropDesc(c []byte) string {
 	return string(content[0:config.Cfg.DescriptionLen])
 }
 
-//读取路径下的md文件的部分信息json
+//GetMarkdown 读取路径下的md文件的部分信息json
 func GetMarkdown(path string) (Markdown, error) {
-
-	content, _, err := readMarkdown(path)
-
-	if err != nil {
+	if content, _, err := readMarkdown(path); err != nil {
 		return content, err
+	} else {
+		return content, nil
 	}
-	return content, nil
 }
 
 //读取路径下的md文件完整信息
 func GetMarkdownDetails(path string) (MarkdownDetails, error) {
-
 	_, content, err := readMarkdown(path)
 
 	if err != nil {
@@ -110,14 +119,9 @@ func GetMarkdownDetails(path string) (MarkdownDetails, error) {
 
 //递归获取md文件信息
 func getMarkdownList(dir string) (MarkdownList, error) {
-	//path=>categoryName
-	var fullDir string
-	fullDir = config.Cfg.DocumentPath + "/content" + dir
-
-	fileOrDir, err := ioutil.ReadDir(fullDir)
-
 	var mdList MarkdownList
-
+	fullDir := config.Cfg.DocumentPath + "/content" + dir
+	fileOrDir, err := ioutil.ReadDir(fullDir)
 	if err != nil {
 		return mdList, err
 	}
@@ -130,78 +134,62 @@ func getMarkdownList(dir string) (MarkdownList, error) {
 			subDir = dir + "/" + fileInfo.Name()
 		}
 		if fileInfo.IsDir() {
-
 			subMdList, err := getMarkdownList(subDir)
 			if err != nil {
 				return mdList, err
 			}
 			mdList = append(mdList, subMdList...)
 		} else if strings.HasSuffix(strings.ToLower(fileInfo.Name()), "md") {
-			markdown, err := GetMarkdown(subDir)
-			if err != nil {
+			if markdown, err := GetMarkdown(subDir); err != nil {
 				return mdList, err
+			} else {
+				mdList = append(mdList, markdown)
 			}
-			mdList = append(mdList, markdown)
 		}
 	}
 	return mdList, nil
-
 }
 
 func GetMarkdownListByCache(dir string) (MarkdownList, error) {
-
 	cacheFileName := fmt.Sprintf("%x", md5.Sum([]byte(dir)))
-
 	cacheFilePath := config.CurrentDir + "/cache/" + cacheFileName + ".json"
-
-	var content MarkdownList
-
+	var markdownLists MarkdownList
 	cacheFile, cacheErr := ioutil.ReadFile(cacheFilePath)
-
-	if cacheErr == nil && json.Unmarshal(cacheFile, &content) == nil {
-		return content, nil
+	if cacheErr == nil && json.Unmarshal(cacheFile, &markdownLists) == nil {
+		return markdownLists, nil
 	}
 
-	content, err := getMarkdownList(dir)
-
+	markdownLists, err := getMarkdownList(dir)
 	if err != nil {
-		return content, err
+		return markdownLists, err
 	}
 
-	sort.Sort(content)
-	markdownListJson, err := json.Marshal(content)
-
+	sort.Sort(markdownLists)
+	markdownListJson, err := json.Marshal(markdownLists)
 	if err != nil {
-		return content, err
+		return markdownLists, err
 	}
 
 	cacheDir := config.CurrentDir + "/cache"
 	cacheInfo, err := os.Stat(cacheDir)
-
 	if err != nil || !cacheInfo.IsDir() {
 		if os.Mkdir(cacheDir, os.ModePerm) != nil {
-			return content, err
+			return markdownLists, err
 		}
 	}
 
-	err = ioutil.WriteFile(cacheFilePath, markdownListJson, os.ModePerm)
-
-	if err != nil {
-		return content, err
+	if err = ioutil.WriteFile(cacheFilePath, markdownListJson, os.ModePerm); err != nil {
+		return markdownLists, err
 	}
 
-	return content, nil
+	return markdownLists, nil
 }
 
 func ReadMarkdownBody(path string) (string, error) {
-
 	fullPath := config.Cfg.DocumentPath + path
-
 	markdown, err := ioutil.ReadFile(fullPath)
-
 	if err != nil {
 		return "", err
 	}
-
 	return string(markdown), nil
 }

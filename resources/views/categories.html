@@ -3,7 +3,7 @@
     <div class="categories">
         {{range .Data}}
             <div class="categories-card">
-                <a href="/category?name={{ .Path }}">
+                <a href="/category?name={{ .Name }}">
                     <h3><img class="icon" src="/public/img/folder.svg" alt=""> {{ .Name }} <sub>({{ .Number }})</sub></h3>
                 </a>
                 <article class="categories-article">
