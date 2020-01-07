@@ -11,7 +11,6 @@ import (
 )
 
 func Article(w http.ResponseWriter, r *http.Request) {
-
 	err := r.ParseForm()
 	if err != nil {
 		helper.WriteErrorHtml(w, err.Error())
@@ -19,7 +18,6 @@ func Article(w http.ResponseWriter, r *http.Request) {
 	}
 
 	path := r.Form.Get("path")
-
 	template, err := helper.HtmlTemplate("article")
 	if err != nil {
 		helper.WriteErrorHtml(w, err.Error())
@@ -37,7 +35,6 @@ func Article(w http.ResponseWriter, r *http.Request) {
 		"Data":   article,
 		"Config": config.Cfg,
 	})
-
 	if err != nil {
 		helper.WriteErrorHtml(w, err.Error())
 		return

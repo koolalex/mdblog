@@ -9,9 +9,7 @@ import (
 )
 
 func Dashboard(w http.ResponseWriter, r *http.Request) {
-
 	var dashboardMsg []string
-
 	err := r.ParseForm()
 	if err != nil {
 		helper.WriteErrorHtml(w, err.Error())
@@ -31,7 +29,6 @@ func Dashboard(w http.ResponseWriter, r *http.Request) {
 	}
 
 	template, err := helper.HtmlTemplate("dashboard")
-
 	if err != nil {
 		helper.WriteErrorHtml(w, err.Error())
 		return

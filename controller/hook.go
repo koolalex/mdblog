@@ -12,7 +12,6 @@ import (
 )
 
 func GithubHook(w http.ResponseWriter, r *http.Request) {
-
 	err := r.ParseForm()
 	if err != nil {
 		helper.SedResponse(w, err.Error())
@@ -26,9 +25,7 @@ func GithubHook(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sign := r.Header.Get("X-Hub-Signature")
-
 	bodyContent, err := ioutil.ReadAll(r.Body)
-
 	if err != nil {
 		helper.SedResponse(w, err.Error())
 		log.Println("WebHook err:" + err.Error())
@@ -44,7 +41,6 @@ func GithubHook(w http.ResponseWriter, r *http.Request) {
 	mac := hmac.New(sha1.New, []byte(config.Cfg.WebHookSecret))
 	mac.Write(bodyContent)
 	expectedHash := "sha1=" + hex.EncodeToString(mac.Sum(nil))
-
 	if sign != expectedHash {
 		helper.SedResponse(w, "WebHook err:Signature does not match")
 		log.Printf("WebHook err:Signature does not match, input_signature:%v calc_signature:%v", sign, expectedHash)
@@ -52,6 +48,5 @@ func GithubHook(w http.ResponseWriter, r *http.Request) {
 	}
 
 	helper.SedResponse(w, "ok")
-
 	helper.UpdateArticle()
 }

@@ -1,35 +1,20 @@
 package config
 
-type userConfig struct {
-	SiteName string `json:"siteName"`
-
-	Author string `json:"author"`
-
-	Icp string `json:"icp"`
-
-	TimeLayout string `json:"timeLayout"`
-
-	Port int `json:"port"`
-
-	WebHookSecret string `json:"webHookSecret"`
-
-	UtterancesRepo string `json:"utterancesRepo"`
-
-	PageSize int `json:"pageSize"`
-
-	DescriptionLen int `json:"descriptionLen"`
-
-	DocumentPath string `json:"documentPath"`
-
-	HtmlKeywords string `json:"htmlKeywords"`
-
-	HtmlDescription string `json:"htmlDescription"`
-
-	CategoryListFileNumber int `json:"categoryListFileNumber"`
-
-	ThemeColor string `json:"themeColor"`
-
-	ThemeOption []string `json:"themeOption"`
-
-	DashboardEntrance string `json:"dashboardEntrance"`
+type UserConfig struct {
+	SiteName          string   `yaml:"site_name"`
+	SiteKeywords      string   `yaml:"site_keywords"`
+	SiteDescription   string   `yaml:"site_description"`
+	Author            string   `yaml:"author"`
+	Icp               string   `yaml:"icp"`
+	TimeLayout        string   `yaml:"time_layout"`
+	Port              int      `yaml:"port"`
+	WebHookSecret     string   `yaml:"webhook_secret"`
+	UtterancesRepo    string   `yaml:"utterances_repo"`
+	PageSize          int      `yaml:"page_size"`
+	DescriptionLen    int      `yaml:"description_len"`
+	DocumentPath      string   `yaml:"document_path"`
+	CategoryDocNumber int      `yaml:"category_doc_number"`
+	ThemeColor        string   `yaml:"theme_color"`
+	ThemeOption       []string `yaml:"theme_option"`
+	DashboardEntrance string   `yaml:"dashboardEntrance"`
 }

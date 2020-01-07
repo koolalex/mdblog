@@ -39,8 +39,8 @@ func GetCategories() (models.Categories, error) {
 		markdownList := category.MarkdownFileList
 		listLen := len(markdownList)
 		categoryListFileNumber := listLen
-		if listLen >= config.Cfg.CategoryListFileNumber {
-			categoryListFileNumber = config.Cfg.CategoryListFileNumber
+		if listLen >= config.Cfg.CategoryDocNumber {
+			categoryListFileNumber = config.Cfg.CategoryDocNumber
 		}
 
 		category.Number = listLen
