@@ -1,15 +1,21 @@
-port: 8086
-page_size: 4
-description_len: 200
-author: Alex
-icp: ""
-webhook_secret: koolalex<>123
-utterances_repo: xusenlin/blog_docs
-document_path: resources/blog_docs
-time_layout: 2006.01.02 15:04
-site_name: alex's Blog
-site_keywords: go,golang,前端,web
-site_description: Personal blog
-category_doc_number: 6
-theme_color: "#090909"
-theme_option: ["#673ab7","#f44336","#9c27b0","#2196f3","#607d8b","#795548"]
+user:
+  port: 8086
+  page_size: 4
+  description_len: 200
+  author: Alex
+  icp: ""
+  webhook_secret: koolalex<>123
+  utterances_repo: xusenlin/blog_docs
+  document_path: resources/blog_docs
+  time_layout: 2006.01.02 15:04
+  site_name: alex's Blog
+  site_keywords: go,golang,前端,web
+  site_description: Personal blog
+  category_doc_number: 6
+  theme_color: "#090909"
+  theme_option: ["#673ab7","#f44336","#9c27b0","#2196f3","#607d8b","#795548"]
+system:
+  app_name: mdblog
+  version: 1.0.0
+  githook_url: "/api/git_push_hook"
+  app_repository: ""

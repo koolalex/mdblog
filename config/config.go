@@ -1,5 +1,23 @@
 package config
 
+import (
+	"gopkg.in/yaml.v2"
+	"io/ioutil"
+	"os"
+)
+
+type Config struct {
+	UserConfig   `yaml:"user"`
+	SystemConfig `yaml:"system"`
+}
+
+type SystemConfig struct {
+	AppName       string `yaml:"app_name"`
+	Version       string `yaml:"version"`
+	GitHookUrl    string `yaml:"githook_url"`
+	AppRepository string `yaml:"app_repository"`
+}
+
 type UserConfig struct {
 	SiteName          string   `yaml:"site_name"`
 	SiteKeywords      string   `yaml:"site_keywords"`
@@ -16,5 +34,25 @@ type UserConfig struct {
 	CategoryDocNumber int      `yaml:"category_doc_number"`
 	ThemeColor        string   `yaml:"theme_color"`
 	ThemeOption       []string `yaml:"theme_option"`
-	DashboardEntrance string   `yaml:"dashboardEntrance"`
+}
+
+var Cfg Config
+var CurrentDir string
+
+func init() {
+	var pwdErr error
+	CurrentDir, pwdErr = os.Getwd()
+	if pwdErr != nil {
+		panic(pwdErr)
+	}
+
+	configFile, err := ioutil.ReadFile("config.yml")
+	if err != nil {
+		panic(err)
+	}
+
+	if err := yaml.Unmarshal(configFile, &Cfg); err != nil {
+		panic(err)
+	}
+
 }
