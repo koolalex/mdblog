@@ -1,7 +1,6 @@
 {{template "header" .}}
-    <div class="sub-title">- Works -</div>
-    <div id="md"></div>
-    <script>
-        document.getElementById('md').innerHTML = marked({{ .Data }});
-    </script>
+<div id="md"></div>
+<script>
+    document.getElementById('md').innerHTML = marked({{ .Data }});
+</script>
 {{template "footer" .}}
