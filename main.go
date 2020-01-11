@@ -14,9 +14,9 @@ func main() {
 	routes.InitRoute()
 
 	fmt.Printf("App Name： v%v \n", config.Cfg.AppName)
-	fmt.Printf("Markdown Blog Version： v%v \n", config.Cfg.Version)
+	fmt.Printf("Markdown Blog Version: v%v \n", config.Cfg.Version)
 	fmt.Printf("Listen On Port: %v \n", config.Cfg.Port)
-	fmt.Printf("Update Post At GitHookUrl: %v   Secret:%v \n", config.Cfg.GitHookUrl, config.Cfg.WebHookSecret)
+	fmt.Printf("Posts Update GitHookUrl: %v   WebHookSecret:%v \n", config.Cfg.GitHookUrl, config.Cfg.WebHookSecret)
 	service.UpdateArticle()
 
 	if err := http.ListenAndServe(":"+strconv.Itoa(config.Cfg.Port), nil); err != nil {
