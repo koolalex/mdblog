@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/koolalex/mdblog/config"
-	"github.com/koolalex/mdblog/helper"
 	"github.com/koolalex/mdblog/routes"
+	"github.com/koolalex/mdblog/service"
 	"net/http"
 	"strconv"
 )
@@ -17,7 +17,7 @@ func main() {
 	fmt.Printf("ListenAndServe On Port %v \n", config.Cfg.Port)
 
 	fmt.Printf("UpdateArticle's GitHookUrl: %v   Secret:%v \n", config.Cfg.GitHookUrl, config.Cfg.WebHookSecret)
-	helper.UpdateArticle()
+	service.UpdateArticle()
 
 	if err := http.ListenAndServe(":"+strconv.Itoa(config.Cfg.Port), nil); err != nil {
 		fmt.Println("ServeErr:", err)

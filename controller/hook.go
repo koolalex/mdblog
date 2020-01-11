@@ -5,7 +5,7 @@ import (
 	"crypto/sha1"
 	"encoding/hex"
 	"github.com/koolalex/mdblog/config"
-	"github.com/koolalex/mdblog/helper"
+	"github.com/koolalex/mdblog/service"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -14,12 +14,12 @@ import (
 func GithubHook(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
-		helper.SedResponse(w, err.Error())
+		SedResponse(w, err.Error())
 		return
 	}
 
 	if "" == config.Cfg.WebHookSecret || "push" != r.Header.Get("x-github-event") {
-		helper.SedResponse(w, "No Configuration WebHookSecret Or Not Pushing Events")
+		SedResponse(w, "No Configuration WebHookSecret Or Not Pushing Events")
 		log.Println("No Configuration WebHookSecret Or Not Pushing Events")
 		return
 	}
@@ -27,13 +27,13 @@ func GithubHook(w http.ResponseWriter, r *http.Request) {
 	sign := r.Header.Get("X-Hub-Signature")
 	bodyContent, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		helper.SedResponse(w, err.Error())
+		SedResponse(w, err.Error())
 		log.Println("WebHook err:" + err.Error())
 		return
 	}
 
 	if err = r.Body.Close(); err != nil {
-		helper.SedResponse(w, err.Error())
+		SedResponse(w, err.Error())
 		log.Println("WebHook err:" + err.Error())
 		return
 	}
@@ -42,11 +42,11 @@ func GithubHook(w http.ResponseWriter, r *http.Request) {
 	mac.Write(bodyContent)
 	expectedHash := "sha1=" + hex.EncodeToString(mac.Sum(nil))
 	if sign != expectedHash {
-		helper.SedResponse(w, "WebHook err:Signature does not match")
+		SedResponse(w, "WebHook err:Signature does not match")
 		log.Printf("WebHook err:Signature does not match, input_signature:%v calc_signature:%v", sign, expectedHash)
 		return
 	}
 
-	helper.SedResponse(w, "ok")
-	helper.UpdateArticle()
+	SedResponse(w, "ok")
+	service.UpdateArticle()
 }
