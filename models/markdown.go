@@ -44,7 +44,7 @@ func readMarkdown(path string) (Markdown, MarkdownDetails, error) {
 	content.Path = path
 	content.Category = meta.Category
 	content.Title = meta.Title
-	content.Date = Time(markdownFile.ModTime())
+	content.Date = JsonTime(markdownFile.ModTime())
 
 	fullContent.Markdown = content
 	fullContent.Body = string(markdown)

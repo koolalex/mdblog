@@ -73,10 +73,8 @@ func UpdateArticle() {
 	}
 
 	log.Println("UpdateArticle:" + string(out))
-	//生成缓存
-	_, err = models.GetMarkdownListByCache("/")
+	_, err = models.GetMarkdownListByCache("/") //生成缓存
 	if err != nil {
 		log.Fatalf("生成缓存失败： %s\n", err)
 	}
-	return
 }

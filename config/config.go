@@ -23,7 +23,6 @@ type UserConfig struct {
 	SiteKeywords      string   `yaml:"site_keywords"`
 	SiteDescription   string   `yaml:"site_description"`
 	Author            string   `yaml:"author"`
-	Icp               string   `yaml:"icp"`
 	TimeLayout        string   `yaml:"time_layout"`
 	Port              int      `yaml:"port"`
 	WebHookSecret     string   `yaml:"webhook_secret"`

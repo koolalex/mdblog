@@ -7,7 +7,7 @@ import (
 )
 
 func initWebRoute() {
-
+	//一级页面
 	http.HandleFunc("/", controller.Index)
 	http.HandleFunc("/categories", controller.Categories)
 	http.HandleFunc("/works", controller.Works)

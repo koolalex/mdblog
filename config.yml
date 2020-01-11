@@ -3,7 +3,6 @@ user:
   page_size: 4
   description_len: 200
   author: Alex
-  icp: ""
   webhook_secret: koolalex<>123
   utterances_repo: xusenlin/blog_docs
   document_path: resources/blog_docs

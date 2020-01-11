@@ -5,17 +5,14 @@ import (
 	"time"
 )
 
+type JsonTime time.Time
+
 type Tag string
 
-type Time time.Time
-
 type Markdown struct {
-	//Title       string `json:"title"`
-	//Category    string `json:"category"`
-	//Tags        []Tag  `json:"tags"`
 	Meta
-	Date Time   `json:"date"` //
-	Path string `json:"path"`
+	Date JsonTime `json:"date"` //
+	Path string   `json:"path"`
 }
 
 type Meta struct {
@@ -30,6 +27,7 @@ type MarkdownDetails struct {
 	Markdown
 	Body string
 }
+
 type MarkdownList []Markdown
 
 type MarkdownPagination struct {
@@ -39,6 +37,8 @@ type MarkdownPagination struct {
 	PageNumber  []int
 }
 
+type Categories []Category
+
 type Category struct {
 	Name             string
 	Path             string
@@ -46,26 +46,25 @@ type Category struct {
 	MarkdownFileList MarkdownList
 }
 
-type Categories []Category
-
-func (t *Time) UnmarshalJSON(b []byte) error {
+/*JsonTime*/
+func (t *JsonTime) UnmarshalJSON(b []byte) error {
 	date, err := time.ParseInLocation(`"`+config.Cfg.TimeLayout+`"`, string(b), time.Local)
 	if err != nil {
 		return nil
 	}
-	*t = Time(date)
+	*t = JsonTime(date)
 	return nil
 }
 
-func (t Time) MarshalJSON() ([]byte, error) {
-
+func (t JsonTime) MarshalJSON() ([]byte, error) {
 	return []byte(t.Format(`"` + config.Cfg.TimeLayout + `"`)), nil
 }
 
-func (t Time) Format(layout string) string {
+func (t JsonTime) Format(layout string) string {
 	return time.Time(t).Format(layout)
 }
 
+/*MarkdownList*/
 func (m MarkdownList) Len() int { return len(m) }
 
 func (m MarkdownList) Less(i, j int) bool { return time.Time(m[i].Date).After(time.Time(m[j].Date)) }
