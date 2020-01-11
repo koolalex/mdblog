@@ -35,23 +35,19 @@ type UserConfig struct {
 	ThemeOption       []string `yaml:"theme_option"`
 }
 
-var Cfg Config
-var CurrentDir string
+var (
+	Cfg        Config
+	CurrentDir string
+)
 
 func init() {
-	var pwdErr error
-	CurrentDir, pwdErr = os.Getwd()
-	if pwdErr != nil {
-		panic(pwdErr)
+	var err error
+	if CurrentDir, err = os.Getwd(); err == nil {
+		if b, err := ioutil.ReadFile("config.yml"); err == nil {
+			if err = yaml.Unmarshal(b, &Cfg); err == nil {
+				return
+			}
+		}
 	}
-
-	configFile, err := ioutil.ReadFile("config.yml")
-	if err != nil {
-		panic(err)
-	}
-
-	if err := yaml.Unmarshal(configFile, &Cfg); err != nil {
-		panic(err)
-	}
-
+	panic(err)
 }

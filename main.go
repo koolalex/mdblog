@@ -10,17 +10,17 @@ import (
 )
 
 func main() {
+	//load
 	routes.InitRoute()
 
 	fmt.Println(config.Cfg.AppName)
-	fmt.Printf("Version：v%v \n", config.Cfg.Version)
-	fmt.Printf("ListenAndServe On Port %v \n", config.Cfg.Port)
-
-	fmt.Printf("UpdateArticle's GitHookUrl: %v   Secret:%v \n", config.Cfg.GitHookUrl, config.Cfg.WebHookSecret)
+	fmt.Printf("Markdown Blog Version： v%v \n", config.Cfg.Version)
+	fmt.Printf("Listen On Port: %v \n", config.Cfg.Port)
+	fmt.Printf("Update Post At GitHookUrl: %v   Secret:%v \n", config.Cfg.GitHookUrl, config.Cfg.WebHookSecret)
 	service.UpdateArticle()
 
 	if err := http.ListenAndServe(":"+strconv.Itoa(config.Cfg.Port), nil); err != nil {
-		fmt.Println("ServeErr:", err)
+		fmt.Println("Listen Error:", err)
 	}
 
 	c := make(chan bool)

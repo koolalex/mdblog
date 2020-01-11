@@ -7,7 +7,5 @@ import (
 )
 
 func initApiRoute() {
-
 	http.HandleFunc(config.Cfg.GitHookUrl, controller.GithubHook)
-
 }
