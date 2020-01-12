@@ -20,6 +20,11 @@
 
 
 <script>
+    marked.setOptions({
+        highlight: function (code) {
+            return hljs.highlightAuto(code).value;
+        }
+    });
     document.getElementById('article').innerHTML = marked({{  .Data.Body }});
 </script>
 <script src="/public/js/prism.js"></script>
