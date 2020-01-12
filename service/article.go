@@ -62,11 +62,11 @@ func UpdateArticle() {
 		log.Fatalf("cmd.Run() failed with %s\n", err)
 	}
 
+	FlushCache()
 	log.Println("UpdateArticle:" + string(out))
-	Cache.Delete("docs")
-	_, err = GetMarkdownListByCache("/") //生成缓存
+	_, err = GetMarkdownListByCache("/")
 	if err != nil {
-		log.Fatalf("生成缓存失败： %s\n", err)
+		log.Fatalf("更新文章失败： %s\n", err)
 	}
 }
 

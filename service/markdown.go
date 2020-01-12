@@ -17,58 +17,64 @@ import (
 
 func readMarkdown(path string) (models.Markdown, models.MarkdownDetails, error) {
 	var (
-		content     models.Markdown
-		fullContent models.MarkdownDetails
+		markdownDoc    models.Markdown
+		markdownDetail models.MarkdownDetails
 	)
 
 	fullPath := config.Cfg.DocumentPath + "/content" + path
+	if val, exists := Cache.Get(fullPath); exists {
+		mdd := val.(models.MarkdownDetails)
+		md := mdd.Markdown
+		fmt.Println("read from cache title: " + md.Title)
+		return md, mdd, nil
+	}
+
 	meta, err := readMeta(path)
 	if err != nil {
-		return content, fullContent, err
+		return markdownDoc, markdownDetail, err
 	}
 
 	markdownFile, fileErr := os.Stat(fullPath)
-
 	if fileErr != nil {
-		return content, fullContent, fileErr
+		return markdownDoc, markdownDetail, fileErr
 	}
 	if markdownFile.IsDir() {
-		return content, fullContent, errors.New("this path is Dir")
+		return markdownDoc, markdownDetail, errors.New("this path is Dir")
 	}
-	markdown, mdErr := ioutil.ReadFile(fullPath)
 
+	markdownBytes, mdErr := ioutil.ReadFile(fullPath)
 	if mdErr != nil {
-		return content, fullContent, mdErr
-	}
-	markdown = bytes.TrimSpace(markdown)
-
-	content.Path = path
-	content.Category = meta.Category
-	content.Title = meta.Title
-	content.Date = models.JsonTime(markdownFile.ModTime())
-
-	fullContent.Markdown = content
-	fullContent.Body = string(markdown)
-
-	if !bytes.HasPrefix(markdown, []byte("```json")) {
-		content.Description = cropDesc(markdown)
-		return content, fullContent, nil
+		return markdownDoc, markdownDetail, mdErr
 	}
 
-	markdown = bytes.Replace(markdown, []byte("```json"), []byte(""), 1)
-	markdownArrInfo := bytes.SplitN(markdown, []byte("```"), 2)
+	markdownBytes = bytes.TrimSpace(markdownBytes)
+	markdownDoc.Path = path
+	markdownDoc.Category = meta.Category
+	markdownDoc.Title = meta.Title
+	markdownDoc.Date = models.JsonTime(markdownFile.ModTime())
 
-	content.Description = cropDesc(markdownArrInfo[1])
+	markdownDetail.Markdown = markdownDoc
+	markdownDetail.Body = string(markdownBytes)
 
-	if err := json.Unmarshal(bytes.TrimSpace(markdownArrInfo[0]), &content); err != nil {
-		return content, fullContent, err
+	if !bytes.HasPrefix(markdownBytes, []byte("```json")) {
+		markdownDoc.Description = cropDesc(markdownBytes)
+		Cache.SetDefault(fullPath, markdownDetail)
+		return markdownDoc, markdownDetail, nil
 	}
 
-	content.Path = path //保证Path不被用户json赋值，json不能添加`json:"-"`忽略，否则编码到缓存的时候会被忽悠。
-	fullContent.Markdown = content
-	fullContent.Body = string(markdownArrInfo[1])
+	markdownBytes = bytes.Replace(markdownBytes, []byte("```json"), []byte(""), 1)
+	markdownArrInfo := bytes.SplitN(markdownBytes, []byte("```"), 2)
 
-	return content, fullContent, nil
+	markdownDoc.Description = cropDesc(markdownArrInfo[1])
+	if err := json.Unmarshal(bytes.TrimSpace(markdownArrInfo[0]), &markdownDoc); err != nil {
+		return markdownDoc, markdownDetail, err
+	}
+
+	markdownDoc.Path = path //保证Path不被用户json赋值，json不能添加`json:"-"`忽略，否则编码到缓存的时候会被忽悠。
+	markdownDetail.Markdown = markdownDoc
+	markdownDetail.Body = string(markdownArrInfo[1])
+	Cache.SetDefault(fullPath, markdownDetail)
+	return markdownDoc, markdownDetail, nil
 }
 
 func readMeta(path string) (meta models.Meta, err error) {
@@ -110,11 +116,9 @@ func GetMarkdown(path string) (models.Markdown, error) {
 //读取路径下的md文件完整信息
 func GetMarkdownDetails(path string) (models.MarkdownDetails, error) {
 	_, content, err := readMarkdown(path)
-
 	if err != nil {
 		return content, err
 	}
-
 	return content, nil
 }
 

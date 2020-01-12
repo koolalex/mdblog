@@ -12,3 +12,8 @@ var (
 func init() {
 	Cache = cache.NewFrom(cache.DefaultExpiration, 5*time.Minute, make(map[string]cache.Item, 5000))
 }
+
+// Delete all cache
+func FlushCache() {
+	Cache.Flush()
+}
