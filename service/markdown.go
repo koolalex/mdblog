@@ -157,7 +157,7 @@ func getMarkdownList(dir string) (models.MarkdownList, error) {
 
 func GetMarkdownListByCache(dir string) (models.MarkdownList, error) {
 	var markdownLists models.MarkdownList
-	if docs, exists := Cache.Get("docs"); exists {
+	if docs, exists := Cache.Get(dir); exists {
 		//fmt.Println("Get MarkdownList From Cache..")
 		return docs.(models.MarkdownList), nil
 	}
@@ -169,7 +169,7 @@ func GetMarkdownListByCache(dir string) (models.MarkdownList, error) {
 
 	sort.Sort(markdownLists)
 
-	Cache.Set("docs", markdownLists, cache.NoExpiration)
+	Cache.Set(dir, markdownLists, cache.NoExpiration)
 
 	return markdownLists, nil
 }

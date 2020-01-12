@@ -4,7 +4,7 @@ user:
   description_len: 200
   author: Alex
   webhook_secret: koolalex<>123
-  utterances_repo: xusenlin/blog_docs
+  utterances_repo: koolalex/mdblog_docs
   document_path: resources/blog_docs
   time_layout: 2006.01.02 15:04
   site_name: alex's Blog
