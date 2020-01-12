@@ -11,16 +11,16 @@ type Tag string
 
 type Markdown struct {
 	Meta
-	Date JsonTime `json:"date"` //
-	Path string   `json:"path"`
+	Description string   `json:"description"`
+	Date        JsonTime `json:"date"` //
+	Path        string   `json:"path"`
 }
 
 type Meta struct {
-	Title       string `json:"title"`
-	Category    string `json:"category"`
-	Tags        []Tag  `json:"tags"`
-	Author      string `json:"author"`
-	Description string `json:"description"`
+	Title    string `json:"title"`
+	Category string `json:"category"`
+	Tags     []Tag  `json:"tags"`
+	Author   string `json:"author"`
 }
 
 type MarkdownDetails struct {

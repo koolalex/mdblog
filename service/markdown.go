@@ -52,19 +52,17 @@ func readMarkdown(path string) (models.Markdown, models.MarkdownDetails, error) 
 	markdownDoc.Category = meta.Category
 	markdownDoc.Title = meta.Title
 	markdownDoc.Date = models.JsonTime(markdownFile.ModTime())
-
+	markdownDoc.Description = cropDesc(markdownBytes)
 	markdownDetail.Markdown = markdownDoc
 	markdownDetail.Body = string(markdownBytes)
 
 	if !bytes.HasPrefix(markdownBytes, []byte("```json")) {
-		markdownDoc.Description = cropDesc(markdownBytes)
 		Cache.SetDefault(fullPath, markdownDetail)
 		return markdownDoc, markdownDetail, nil
 	}
 
 	markdownBytes = bytes.Replace(markdownBytes, []byte("```json"), []byte(""), 1)
 	markdownArrInfo := bytes.SplitN(markdownBytes, []byte("```"), 2)
-
 	markdownDoc.Description = cropDesc(markdownArrInfo[1])
 	if err := json.Unmarshal(bytes.TrimSpace(markdownArrInfo[0]), &markdownDoc); err != nil {
 		return markdownDoc, markdownDetail, err
