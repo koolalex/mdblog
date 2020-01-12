@@ -20,7 +20,7 @@ func GetCategories() (models.Categories, error) {
 			continue
 		}
 
-		if markdownList, err := models.GetMarkdownListByCache("/" + category.Name()); err == nil {
+		if markdownList, err := GetMarkdownListByCache("/" + category.Name()); err == nil {
 			for _, md := range markdownList {
 				category, exists := categoryMap[md.Category]
 				if !exists {
@@ -66,7 +66,7 @@ func GetCategory(categoryName string) (models.Category, error) {
 			continue
 		}
 
-		if markdownList, err := models.GetMarkdownListByCache("/" + fi.Name()); err == nil {
+		if markdownList, err := GetMarkdownListByCache("/" + fi.Name()); err == nil {
 			for _, md := range markdownList {
 				if md.Meta.Category == categoryName {
 					category.Number += 1

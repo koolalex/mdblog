@@ -6,13 +6,12 @@ import (
 	"github.com/koolalex/mdblog/models"
 	"log"
 	"math"
-	"os"
 	"os/exec"
 	"strings"
 )
 
 func GetArticleList(page int, dir string, search string) (models.MarkdownPagination, error) {
-	allArticle, err := models.GetMarkdownListByCache(dir)
+	allArticle, err := GetMarkdownListByCache(dir)
 	if err != nil {
 		return models.MarkdownPagination{}, err
 	}
@@ -48,11 +47,6 @@ func GetCategoryArticlePagination(page int, categoryName string, search string) 
 }
 
 func UpdateArticle() {
-	deleteCacheErr := os.RemoveAll("cache")
-	if deleteCacheErr != nil {
-		fmt.Println(deleteCacheErr)
-	}
-
 	blogPath := config.CurrentDir + "/" + config.Cfg.DocumentPath
 
 	_, err := exec.LookPath("git")
@@ -69,7 +63,8 @@ func UpdateArticle() {
 	}
 
 	log.Println("UpdateArticle:" + string(out))
-	_, err = models.GetMarkdownListByCache("/") //生成缓存
+	Cache.Delete("docs")
+	_, err = GetMarkdownListByCache("/") //生成缓存
 	if err != nil {
 		log.Fatalf("生成缓存失败： %s\n", err)
 	}
