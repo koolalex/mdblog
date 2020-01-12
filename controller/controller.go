@@ -2,7 +2,6 @@ package controller
 
 import (
 	"github.com/koolalex/mdblog/config"
-	"github.com/koolalex/mdblog/models"
 	"github.com/koolalex/mdblog/service"
 	"net/http"
 	"strconv"
@@ -76,7 +75,7 @@ func Works(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	markdown, err := models.ReadMarkdownBody("/Works.md")
+	markdown, err := service.ReadMarkdownBody("/Works.md")
 	if err != nil {
 		WriteErrorHtml(w, err.Error())
 		return
@@ -100,7 +99,7 @@ func About(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	markdown, err := models.ReadMarkdownBody("/About.md")
+	markdown, err := service.ReadMarkdownBody("/About.md")
 	if err != nil {
 		WriteErrorHtml(w, err.Error())
 		return
@@ -132,7 +131,7 @@ func Article(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	article, err := models.GetMarkdownDetails(path)
+	article, err := service.GetMarkdownDetails(path)
 	if err != nil {
 		WriteErrorHtml(w, err.Error())
 		return
