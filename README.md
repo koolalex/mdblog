@@ -2,6 +2,14 @@
 
 > mdblog 是基于 go 语言开发的，适合用来学习和展示 markdown 文档的个人博客。
 
+## Features
+- [x] Markdown
+- [x] Memory Cache
+- [x] Webhook update posts
+- [x] Comment
+- [ ] Tags
+- [ ] Post's Rank
+
 ## 文章目录结构
 ```text
 content       --------------- 博客所有文章所在目录
