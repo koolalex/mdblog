@@ -1,9 +1,9 @@
 package routes
 
 import (
-	"github.com/koolalex/mdblog/config"
-	"github.com/koolalex/mdblog/controller"
 	"net/http"
+
+	"github.com/koolalex/mdblog/controller"
 )
 
 func initWebRoute() {
@@ -17,6 +17,7 @@ func initWebRoute() {
 	http.HandleFunc("/category", controller.CategoryArticle)
 	//静态文件服务器
 	http.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("resources/public"))))
-	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir(config.Cfg.DocumentPath+"/assets"))))
+	// http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir(config.Cfg.DocumentPath+"/assets"))))
+	http.HandleFunc("/assets/", controller.ServAssets)
 
 }

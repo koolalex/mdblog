@@ -1,11 +1,14 @@
 package controller
 
 import (
-	"github.com/koolalex/mdblog/config"
-	"github.com/koolalex/mdblog/service"
+	"fmt"
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
+
+	"github.com/koolalex/mdblog/config"
+	"github.com/koolalex/mdblog/service"
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
@@ -181,4 +184,26 @@ func CategoryArticle(w http.ResponseWriter, r *http.Request) {
 		WriteErrorHtml(w, err.Error())
 		return
 	}
+}
+
+/*assets*/
+func ServAssets(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("assets:", r.URL.Path)
+	baseUrl, err := url.Parse(r.Referer())
+	if err != nil {
+		WriteErrorHtml(w, err.Error())
+		return
+	}
+
+	articlePath := baseUrl.Query().Get("path")
+	categoryName := strings.Replace(articlePath, "/", "", 1)
+	if strings.Index(categoryName, "/") >= 0 {
+		categoryName = strings.Split(categoryName, "/")[0]
+		fmt.Println("categoryName: ", categoryName)
+		assetFullPath := config.Cfg.DocumentPath + "/content/" + categoryName + r.URL.Path
+		fmt.Println("assetFullPath: ", assetFullPath)
+		http.ServeFile(w, r, assetFullPath)
+		return
+	}
+	//default handle todo:..
 }
