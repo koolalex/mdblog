@@ -108,10 +108,6 @@ p{
     }
 }
 
-.markdow img{
-    width: 100%;
-}
-
 
 .footer{
     color: #999;
@@ -314,92 +310,4 @@ hr:after{
 
 .sub{
     font-size: 14px;
-}
-
-/* MARKDOWN BLOCK QUOTE
-=============================================================================*/
-
-#article blockquote {
-    margin: 0;
-}
-
-#article blockquote {
-    margin-bottom: 16px;
-    margin-top: 0;
-}
-
-#article blockquote {
-    border-left: .25em solid #dfe2e5;
-    color: #6a737d;
-    padding: 0 1em;
-}
-
-#article blockquote>:first-child {
-    margin-top: 0;
-}
-
-#article blockquote>:last-child {
-    margin-bottom: 0;
-}
-
-/* MARKDOWN TABLES
-=============================================================================*/
-#article table {
-    display: block;
-    overflow: auto;
-    width: 100%;
-}
-
-#article table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
-#article table th {
-    font-weight: 600;
-}
-
-#article table td,
-#article table th {
-    border: 1px solid #dfe2e5;
-    padding: 6px 13px;
-}
-
-#article table tr {
-    background-color: #fff;
-    border-top: 1px solid #c6cbd1;
-}
-
-#article table tr:nth-child(2n) {
-    background-color: #f6f8fa;
-}
-
-#article table {
-    display: block;
-    overflow: auto;
-    width: 100%;
-}
-
-#article table th {
-    font-weight: 600;
-}
-
-#article table td,
-#article table th {
-    border: 1px solid #dfe2e5;
-    padding: 6px 13px;
-}
-
-#article table tr {
-    background-color: #fff;
-    border-top: 1px solid #c6cbd1;
-}
-
-#article table tr:nth-child(2n) {
-    background-color: #f6f8fa;
-}
-
-#article table {
-    margin-bottom: 16px;
-    margin-top: 0;
 }
