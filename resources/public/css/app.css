@@ -49,22 +49,6 @@ p{
     line-height: 2em;
 }
 
-blockquote{
-    text-indent: 2em;
-    position: relative;
-    margin: 20px 0;
-}
-blockquote::before{
-    position: absolute;
-    left: -32px;
-    top: -10px;
-    content: '“';
-    font-family: fantasy;
-    font-size: 40px;
-    color: #673ab7;
-    color: var(--primary,#673ab7);
-}
-
 
 @media screen and (max-width: 860px){
     body{
@@ -330,6 +314,32 @@ hr:after{
 
 .sub{
     font-size: 14px;
+}
+
+/* MARKDOWN BLOCK QUOTE
+=============================================================================*/
+
+#article blockquote {
+    margin: 0;
+}
+
+#article blockquote {
+    margin-bottom: 16px;
+    margin-top: 0;
+}
+
+#article blockquote {
+    border-left: .25em solid #dfe2e5;
+    color: #6a737d;
+    padding: 0 1em;
+}
+
+#article blockquote>:first-child {
+    margin-top: 0;
+}
+
+#article blockquote>:last-child {
+    margin-bottom: 0;
 }
 
 /* MARKDOWN TABLES
