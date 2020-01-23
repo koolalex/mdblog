@@ -10,7 +10,6 @@ import (
 )
 
 func main() {
-	//load
 	routes.InitRoute()
 
 	fmt.Printf("App Name： %v \n", config.Cfg.AppName)
