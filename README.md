@@ -4,6 +4,7 @@
 
 ## Features
 - [x] Markdown
+- [x] Github Markdown CSS Style
 - [x] Memory Cache
 - [x] Webhook update posts
 - [x] Comment
