@@ -1,10 +1,12 @@
 
-*{
+* {
     box-sizing: border-box;
 }
+
 html {
-    font-family: josefin sans,-apple-system,BlinkMacSystemFont,helvetica neue,pingfang sc,hiragino sans gb,STHeiti,microsoft yahei,wenquanyi micro hei,Arial,Verdana,sans-serif;
+    font-family: josefin sans, -apple-system, BlinkMacSystemFont, helvetica neue, pingfang sc, hiragino sans gb, STHeiti, microsoft yahei, wenquanyi micro hei, Arial, Verdana, sans-serif;
 }
+
 html::-webkit-scrollbar {
     width: 8px;
     height: 8px
@@ -19,13 +21,15 @@ html::-webkit-scrollbar-thumb {
 html::-webkit-scrollbar-thumb:hover {
     background-color: #ddd
 }
-pre{
+
+pre {
     padding: 1em;
     margin: .5em 0;
     overflow: auto;
     background: #f5f2f0;
 }
-body{
+
+body {
     padding: 0;
     margin: 0;
     display: flex;
@@ -34,33 +38,35 @@ body{
 }
 
 
-a{
+a {
     color: #161209;
     text-decoration: none;
-    transition: color .2s ease,border-color .46s ease,background .46s ease,opacity .46s ease;
+    transition: color .2s ease, border-color .46s ease, background .46s ease, opacity .46s ease;
 }
 
-a:hover{
+a:hover {
     color: #673ab7;
-    color: var(--primary,#673ab7);
+    color: var(--primary, #673ab7);
 
 }
-p{
+
+p {
     line-height: 2em;
 }
 
 
-@media screen and (max-width: 860px){
-    body{
+@media screen and (max-width: 860px) {
+    body {
         padding: 6px;
     }
 }
+
 @font-face {
     font-family: josefin sans;
-    font-style: normal;
-    font-weight: 400;
+    /*font-style: normal;*/
+    /*font-weight: 400;*/
     src: url(//lib.baomitu.com/fonts/josefin-sans/josefin-sans-regular.eot);
-    src: local("Josefin Sans"),local("JosefinSans-Normal"),url(//lib.baomitu.com/fonts/josefin-sans/josefin-sans-regular.eot?#iefix) format("embedded-opentype"),url(//lib.baomitu.com/fonts/josefin-sans/josefin-sans-regular.woff2) format("woff2"),url(//lib.baomitu.com/fonts/josefin-sans/josefin-sans-regular.woff) format("woff"),url(//lib.baomitu.com/fonts/josefin-sans/josefin-sans-regular.ttf) format("truetype"),url(//lib.baomitu.com/fonts/josefin-sans/josefin-sans-regular.svg#JosefinSans) format("svg")
+    src: local("Josefin Sans"), local("JosefinSans-Normal"), url(//lib.baomitu.com/fonts/josefin-sans/josefin-sans-regular.eot?#iefix) format("embedded-opentype"), url(//lib.baomitu.com/fonts/josefin-sans/josefin-sans-regular.woff2) format("woff2"), url(//lib.baomitu.com/fonts/josefin-sans/josefin-sans-regular.woff) format("woff"), url(//lib.baomitu.com/fonts/josefin-sans/josefin-sans-regular.ttf) format("truetype"), url(//lib.baomitu.com/fonts/josefin-sans/josefin-sans-regular.svg#JosefinSans) format("svg")
 }
 
 
@@ -72,28 +78,30 @@ p{
 
 }
 
-.head{
+.head {
     width: 100%;
     height: 64px;
 }
-.head-content{
+
+.head-content {
     display: flex;
     height: 100%;
     align-items: center;
     justify-content: space-between;
 }
-@media screen and (max-width: 860px){
-    .head-content{
+
+@media screen and (max-width: 860px) {
+    .head-content {
         padding-top: 10px;
         flex-direction: column;
     }
 }
 
-.nav a{
+.nav a {
     padding: 0 8px;
 }
 
-.post-warp{
+.post-warp {
     position: relative;
     width: 100%;
     overflow: hidden;
@@ -102,47 +110,74 @@ p{
     min-height: calc(100vh - 120px);
     padding: 46px 0;
 }
-@media screen and (max-width: 860px){
-    .post-warp{
+
+@media screen and (max-width: 860px) {
+    .post-warp {
         min-height: calc(100vh - 132px);
     }
 }
 
 
-.footer{
+.footer {
     color: #999;
     display: flex;
     height: 54px;
     line-height: 1;
     align-items: center;
     justify-content: center;
+
+    text-align: center;
 }
 
-@media screen and (max-width: 860px){
-    .footer{
+.footer > span {
+    width: 100%;
+}
+
+.footer div {
+    margin: 9px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.powered {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+
+@media screen and (max-width: 860px) {
+    .footer {
         flex-direction: column;
     }
-    .footer span{
+
+    .footer span {
         text-align: center;
         padding: 4px 0;
     }
 }
 
-.footer a{
-    color: #999;
+.footer a {
+    color: #4f5861;
     margin: 0 8px;
 }
-pre{
+
+pre {
     border-radius: 3px;
     font-size: 14px;
     line-height: 1.6;
     overflow: auto;
 }
-hr{
+
+hr {
     border: none;
     overflow: hidden;
 }
-hr:after{
+
+hr:after {
     content: '';
     display: block;
     margin: 30px auto;
@@ -155,31 +190,36 @@ hr:after{
 
 /*Categories*/
 
-.categories{
+.categories {
     display: flex;
     width: 100%;
     justify-content: space-between;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
 }
-.categories-card{
+
+.categories-card {
     width: 50%;
     margin-bottom: 46px;
     min-height: 250px;
     padding: 0 16px;
 }
-@media screen and (max-width: 860px){
-    .categories-card{
+
+@media screen and (max-width: 860px) {
+    .categories-card {
         width: 100%;
     }
 }
-.icon{
+
+.icon {
     width: 16px;
     height: 16px;
 }
-.categories-article{
+
+.categories-article {
     text-indent: 2em;
 }
-.categories-article a{
+
+.categories-article a {
     display: block;
     margin-bottom: 10px;
     width: 100%;
@@ -190,18 +230,20 @@ hr:after{
 
 /*Pagination*/
 
-.pagination{
+.pagination {
     display: flex;
     margin: 60px 0;
     width: 100%;
     justify-content: center;
     padding: 0;
 }
-.pagination li{
+
+.pagination li {
     list-style-type: none;
     margin: 0 10px;
     width: 20px;
 }
+
 .pagination li a {
     text-align: center;
     display: block;
@@ -209,24 +251,26 @@ hr:after{
     color: #bfbfbf;
     padding-bottom: 6px;
 }
-.pagination li a:hover,.pagination .active a{
+
+.pagination li a:hover, .pagination .active a {
     border-bottom: 3px solid #673ab7;
-    border-bottom: 3px solid var(--primary,#673ab7);
+    border-bottom: 3px solid var(--primary, #673ab7);
 }
 
 /*Index*/
-.articles{
+.articles {
     margin: 0;
     padding: 0;
 }
-.articles li{
+
+.articles li {
     padding-bottom: 8px;
     list-style-type: none;
     margin: 40px 0;
     text-align: center;
- }
+}
 
-.articles li:after{
+.articles li:after {
     content: '';
     display: block;
     margin: 60px auto;
@@ -236,18 +280,19 @@ hr:after{
     text-align: center;
 }
 
-.articles li:last-child:after{
+.articles li:last-child:after {
     display: none;
 }
-.read-all{
+
+.read-all {
     display: inline-block;
     padding: 4px 20px;
     font-size: 14px;
     color: #fff;
     background: #673ab7;
     border: 2px solid #673ab7;
-    background: var(--primary,#673ab7);
-    border: 2px solid var(--primary,#673ab7);
+    background: var(--primary, #673ab7);
+    border: 2px solid var(--primary, #673ab7);
     text-decoration: none;
     border-radius: 2px;
     transition-property: background-color;
@@ -256,21 +301,23 @@ hr:after{
     transition-delay: 0s;
 }
 
-.read-all:hover{
+.read-all:hover {
     background: #fff;
 }
 
-.articles li .title{
+.articles li .title {
     color: #555;
     font-size: 20px;
     font-weight: normal;
 }
-.articles li .title:hover{
+
+.articles li .title:hover {
     color: #673ab7;
-    color: var(--primary,#673ab7);
+    color: var(--primary, #673ab7);
 }
-.article-info{
-    margin:20px 0 60px;
+
+.article-info {
+    margin: 20px 0 60px;
     color: #999;
     font-size: 14px;
     height: 40px;
@@ -279,35 +326,39 @@ hr:after{
     align-items: center;
 }
 
-.article-info img{
+.article-info img {
     position: relative;
     top: 2px;
     width: 16px;
     height: 16px;
 }
-.article-info .divider-line{
+
+.article-info .divider-line {
     width: 2px;
     height: 16px;
     background: #999;
     margin: 0 14px;
 }
-.article{
+
+.article {
     padding: 10px 0;
     margin: 10px 0;
 }
-.articles .description{
+
+.articles .description {
     color: #555;
     font-size: 16px;
     text-align: left;
     line-height: 2;
     margin-bottom: 40px;
 }
-@media screen and (max-width: 860px){
-    .articles .description{
+
+@media screen and (max-width: 860px) {
+    .articles .description {
         padding: 0 10px;
     }
 }
 
-.sub{
+.sub {
     font-size: 14px;
 }

@@ -55,6 +55,7 @@ func UpdateArticle() {
 		log.Fatalf("git cmd failed with %s\n", err)
 	}
 
+	log.Println("执行git pull 命令拉取最新文章...")
 	cmd := exec.Command("git", "pull")
 	cmd.Dir = blogPath
 	out, err := cmd.CombinedOutput()

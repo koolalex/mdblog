@@ -16,7 +16,7 @@ func main() {
 	fmt.Printf("Markdown Blog Version: v%v \n", config.Cfg.Version)
 	fmt.Printf("Listen On Port: %v \n", config.Cfg.Port)
 	fmt.Printf("Posts Update GitHookUrl: %v   WebHookSecret:%v \n", config.Cfg.GitHookUrl, config.Cfg.WebHookSecret)
-	service.UpdateArticle()
+	go service.UpdateArticle()
 
 	if err := http.ListenAndServe(":"+strconv.Itoa(config.Cfg.Port), nil); err != nil {
 		fmt.Println("Listen Error:", err)

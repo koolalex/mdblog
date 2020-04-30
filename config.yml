@@ -17,4 +17,4 @@ system:
   app_name: mdblog
   version: 1.0.0
   githook_url: "/api/git_push_hook"
-  app_repository: ""
+  app_repository: "https://github.com/koolalex/mdblog"
