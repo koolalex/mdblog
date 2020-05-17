@@ -20,7 +20,7 @@ steps:
   - name: publish
     image: plugins/docker
     settings:
-      registry: 106.12.52.246:5000
+      registry: http://106.12.52.246:5000
       repo: 106.12.52.246:5000/mdblog
 
   - name: deploy
