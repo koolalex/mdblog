@@ -1,0 +1,33 @@
+---
+clone:
+  git:
+    image: https://github.com/koolalex/leetcode.git
+
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: build
+    image: golang
+    environment:
+      A_SECRET:
+        from_secret: hello
+    commands:
+      - echo $$A_SECRET
+      - echo pwd
+
+  - name: deploy
+    image: appleboy/drone-ssh
+    when:
+      status:
+        - success
+    settings:
+      host:
+        from_secret: host
+      username: root
+      password:
+        from_secret: password
+      script:
+        - cd /home/dockertest/drone1
+        - echo "aaabbbccc" > test.out
