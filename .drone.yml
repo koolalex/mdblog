@@ -17,6 +17,12 @@ steps:
       - echo $$A_SECRET
       - echo pwd
 
+  - name: publish
+    image: plugins/docker
+    settings:
+      registry: 106.12.52.246:5000
+      repo: 106.12.52.246:5000/mdblog
+
   - name: deploy
     image: appleboy/drone-ssh
     when:
